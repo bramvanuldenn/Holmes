@@ -1,9 +1,9 @@
 from dataclasses import dataclass, asdict
 from typing import Union, List
-from src.objects import Company, Person, Place, Domain
+from Holmes.objects import Company, Person, Place, Domain
 from datetime import datetime
-from src.jobs.Parameters import Parameters
-from src.jobs.Parameters import ParamField
+from Holmes.jobs.Parameters import Parameters
+from Holmes.jobs.Parameters import ParamField
 
 
 @dataclass

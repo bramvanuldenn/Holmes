@@ -1,6 +1,6 @@
 from bson import ObjectId
-from src.objects.data_objects import DataObject
-import src.objects as objects
+from Holmes.data_objects import DataObject
+import Holmes.objects as objects
 from dataclasses import dataclass, field, asdict
 
 

@@ -1,7 +1,5 @@
 from bson import ObjectId
-
-from src.objects.Obj import Obj
-from typing import Literal
+from Holmes.objects.Obj import Obj
 
 
 class Relation:

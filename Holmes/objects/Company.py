@@ -1,4 +1,4 @@
-from src.objects.Obj import Obj
+from Holmes.objects.Obj import Obj
 from dataclasses import dataclass
 
 

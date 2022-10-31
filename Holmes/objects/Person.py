@@ -1,7 +1,7 @@
-from src.objects import Obj
+from Holmes.objects import Obj
 from dataclasses import dataclass
 
 
 @dataclass
-class Place(Obj):
+class Person(Obj):
     pass

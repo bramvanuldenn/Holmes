@@ -1,13 +1,13 @@
-from setuptools import setup, find_packages
+from setuptools import setup
 
 setup(
     name='Holmes',
     version='0.1',
-    packages=find_packages('src'),
-    package_dir={'': 'src'},
+    packages=['Holmes', 'Holmes.jobs', 'Holmes.objects', 'Holmes.objects.relation', 'Holmes.data_objects',
+              'Holmes.data_objects.exceptions'],
     url='https://github.com/bramvanuldenn/Holmes',
     license='Apache',
     author='bramv',
     author_email='bram@whatson.nl',
-    description='Lightweight module for data structure and relations within Whatson workspace'
+    description='Data and relationship defining for Whatson'
 )
