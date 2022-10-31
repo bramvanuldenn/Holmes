@@ -4,7 +4,7 @@ REQUIRED = ['bson==0.5.10']
 setup(
     name='Holmes',
     version='0',
-    modules=find_packages(include=['Holmes']),
+    py_modules=['holmes'],
     url='https://github.com/bramvanuldenn/Holmes',
     license='Apache',
     author='bramv',
