@@ -1,9 +1,10 @@
-from setuptools import setup
+from setuptools import setup, find_packages
 
+REQUIRED = ['bson==0.5.10']
 setup(
     name='Holmes',
     version='0',
-    py_modules=['holmes'],
+    modules=find_packages(include=['Holmes']),
     url='https://github.com/bramvanuldenn/Holmes',
     license='Apache',
     author='bramv',
