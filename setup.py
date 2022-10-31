@@ -3,7 +3,7 @@ from setuptools import setup
 setup(
     name='Holmes',
     version='0',
-    packages=['jobs', 'objects', 'objects.relation', 'objects.data_objects', 'objects.data_objects.exceptions'],
+    py_modules=['holmes'],
     url='https://github.com/bramvanuldenn/Holmes',
     license='Apache',
     author='bramv',
