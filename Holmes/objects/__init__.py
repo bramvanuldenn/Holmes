@@ -1,10 +1,10 @@
 # todo: this isn't very good
-from objects import data_objects
-from objects.Obj import Obj
-from objects.Company import Company
-from objects.Domain import Domain
-from objects.Place import Place
-from objects.Person import Person
+from Holmes import data_objects
+from Holmes.objects.Obj import Obj
+from Holmes.objects.Company import Company
+from Holmes.objects.Domain import Domain
+from Holmes.objects.Place import Place
+from Holmes.objects.Person import Person
 from typing import Type, Union
 from enum import Enum
 from bson import ObjectId
