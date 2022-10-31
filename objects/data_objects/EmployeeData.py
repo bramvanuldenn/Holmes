@@ -4,10 +4,10 @@ from dataclasses import dataclass
 
 
 @dataclass
-class CompanyData(DataObject):
-    data_type = 'company'
+class EmployeeData(DataObject):
+    relation_key: ObjectId = None
+    data_type = 'employee'
 
 
 if __name__ == '__main__':
-    t = CompanyData(ObjectId(), {})
-    print(t.to_json())
+    test = EmployeeData()

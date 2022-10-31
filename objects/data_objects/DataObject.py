@@ -1,14 +1,15 @@
-from dataclasses import dataclass
-from dataclasses import asdict
+from dataclasses import dataclass, asdict, field
+from bson import ObjectId
 from objects.data_objects import exceptions
 
 
 @dataclass
 class DataObject:
-    key: str = None
-    data: dict = None
+    key: ObjectId
+    data: dict = field(default_factory=dict)
+    data_type = 'base_type'
 
-    def get_as_dict(self) -> dict:
+    def to_json(self) -> dict:
         """
         Returns this objects attributes in a dictionary.
         Will throw an exception if data or key attributes are empty.
@@ -19,7 +20,11 @@ class DataObject:
             raise exceptions.EmptyDataObjectException(self, 'Data not loaded.')
         if self.key is None:
             raise exceptions.EmptyDataObjectException(self, 'Key not loaded.')
-        return asdict(self)
+
+        self_dict = asdict(self)
+        self_dict.update({'data_type': self.data_type})
+
+        return self_dict
 
     def load_data(self, data: dict) -> None:
         """
@@ -28,7 +33,7 @@ class DataObject:
         :param data: Dictionary of your data
         :return: None
         """
-        self.data = data
+        self.data.update(data)
 
 
 @dataclass
@@ -38,5 +43,5 @@ class test(DataObject):
 
 
 if __name__ == '__main__':
-    t = test()
-    print(t.get_as_dict())
+    t = DataObject(ObjectId())
+    print(t.to_json())

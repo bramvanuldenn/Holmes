@@ -9,7 +9,8 @@ class Domain(Obj):
 
 if __name__ == '__main__':
     d = Domain('123')
-    d.key = None
+    d.key = '123'
+    d.data = {'test_data': 123}
     a = d.create_new_data_object()
     a.data = {1: 1}
-    print(a.get_as_dict())
+    print(d.to_json())

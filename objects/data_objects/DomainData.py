@@ -4,4 +4,4 @@ from dataclasses import dataclass
 
 @dataclass
 class DomainData(DataObject):
-    pass
+    data_type = 'domain'
