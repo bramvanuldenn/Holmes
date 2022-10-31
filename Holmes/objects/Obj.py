@@ -6,7 +6,7 @@ from dataclasses import dataclass, field, asdict
 
 @dataclass
 class Obj:
-    key: str
+    key: ObjectId
     data: dict = field(default_factory=dict)
 
     def __post_init__(self):
