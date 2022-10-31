@@ -5,6 +5,7 @@ setup(
     name='Holmes',
     version='0',
     py_modules=['holmes'],
+    package_dir={'': ''},
     url='https://github.com/bramvanuldenn/Holmes',
     license='Apache',
     author='bramv',
