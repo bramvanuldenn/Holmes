@@ -1,9 +1,9 @@
-from setuptools import setup
+from setuptools import setup, find_packages
 
 setup(
     name='Holmes',
     version='0.1',
-    py_modules=['Holmes'],
+    packages=find_packages('src'),
     package_dir={'': 'src'},
     url='https://github.com/bramvanuldenn/Holmes',
     license='Apache',
