@@ -1,6 +1,6 @@
 from bson import ObjectId
 
-from objects.Obj import Obj
+from src.objects.Obj import Obj
 from typing import Literal
 
 

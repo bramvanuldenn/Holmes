@@ -1,6 +1,6 @@
-from objects.relation.Relation import Relation
-from objects.Company import Company
-from objects.Person import Person
+from src.objects.relation.Relation import Relation
+from src.objects.Company import Company
+from src.objects.Person import Person
 
 
 class InvalidEmployeeException(Exception):

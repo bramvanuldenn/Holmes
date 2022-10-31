@@ -1,5 +1,5 @@
 from bson import ObjectId
-from objects.data_objects.DataObject import DataObject
+from src.objects.data_objects.DataObject import DataObject
 from dataclasses import dataclass
 
 

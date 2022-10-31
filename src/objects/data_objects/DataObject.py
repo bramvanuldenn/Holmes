@@ -1,6 +1,6 @@
 from dataclasses import dataclass, asdict, field
 from bson import ObjectId
-from objects.data_objects import exceptions
+from src.objects.data_objects import exceptions
 
 
 @dataclass

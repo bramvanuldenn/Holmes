@@ -1,4 +1,4 @@
-from objects.Obj import Obj
+from src.objects.Obj import Obj
 from dataclasses import dataclass
 
 

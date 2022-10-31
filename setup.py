@@ -1,15 +1,13 @@
-from setuptools import setup, find_packages
+from setuptools import setup
 
-REQUIRED = ['bson==0.5.10']
 setup(
     name='Holmes',
-    version='0',
-    py_modules=['Holmes'],
-    packages=['jobs', 'objects.*'],
-    package_dir={'': '..'},
+    version='0.1',
+    packages=['src', 'src.jobs', 'src.objects', 'src.objects.relation', 'src.objects.data_objects',
+              'src.objects.data_objects.exceptions'],
     url='https://github.com/bramvanuldenn/Holmes',
     license='Apache',
     author='bramv',
     author_email='bram@whatson.nl',
-    description='Small package for defining data and their relations within the Whatson workspace'
+    description='Lightweight module for data structure and relations within Whatson workspace'
 )
