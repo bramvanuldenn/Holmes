@@ -4,7 +4,8 @@ REQUIRED = ['bson==0.5.10']
 setup(
     name='Holmes',
     version='0',
-    py_modules=['holmes'],
+    py_modules=['Holmes'],
+    packages=['jobs', 'objects.*'],
     package_dir={'': '..'},
     url='https://github.com/bramvanuldenn/Holmes',
     license='Apache',
