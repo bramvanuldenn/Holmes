@@ -4,7 +4,7 @@ from Holmes.data_objects import exceptions
 
 
 @dataclass
-class DataObject:
+class BaseData:
     key: ObjectId
     data: dict = field(default_factory=dict)
     data_type = 'base_type'
@@ -37,11 +37,11 @@ class DataObject:
 
 
 @dataclass
-class test(DataObject):
+class test(BaseData):
     a: int = None
     b: str = None
 
 
 if __name__ == '__main__':
-    t = DataObject(ObjectId())
+    t = BaseData(ObjectId())
     print(t.to_json())

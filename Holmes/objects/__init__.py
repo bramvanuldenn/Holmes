@@ -1,6 +1,6 @@
 # todo: this isn't very good
 from Holmes import data_objects
-from Holmes.objects.Obj import Obj
+from Holmes.objects.BaseObject import BaseObject
 from Holmes.objects.Company import Company
 from Holmes.objects.Domain import Domain
 from Holmes.objects.Place import Place
@@ -31,7 +31,7 @@ class ObjectsEnum(Enum):
     PLACE = Place
 
 
-def create_object(object_type: ObjectsEnum, key=None, object_data=None) -> Type[Obj]:
+def create_object(object_type: ObjectsEnum, key=None, object_data=None) -> Type[BaseObject]:
     """
     Creates any of the 4 object types.
 

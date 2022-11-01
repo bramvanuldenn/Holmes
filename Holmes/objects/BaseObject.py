@@ -1,18 +1,18 @@
 from bson import ObjectId
-from Holmes.data_objects import DataObject
+from Holmes.data_objects import BaseData
 import Holmes.objects as objects
 from dataclasses import dataclass, field, asdict
 
 
 @dataclass
-class Obj:
+class BaseObject:
     key: ObjectId
     data: dict = field(default_factory=dict)
 
     def __post_init__(self):
         self.name = self.__class__.__name__.lower()
 
-    def create_new_data_object(self, key=None) -> DataObject:
+    def create_new_data_object(self, key=None) -> BaseData:
         """
         Returns the correct data_object for the class that calls it.
         Also loads the data object with the key of the class that called it.

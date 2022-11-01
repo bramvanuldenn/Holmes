@@ -1,6 +1,5 @@
-from Holmes.objects.relation.Relation import Relation
-from Holmes.objects.Company import Company
-from Holmes.objects.Person import Person
+from Holmes.objects.relation.BaseRelation import BaseRelation
+from Holmes.objects.Objects import Company, Person
 
 
 class InvalidEmployeeException(Exception):
@@ -13,7 +12,7 @@ class InvalidEmployeeException(Exception):
                f"The first object should be a Company, the second should be a Person."
 
 
-class Employee(Relation):
+class Employee(BaseRelation):
     def __init__(self, obj_1: Company, obj_2: Person, source: str, confidence: int) -> None:
         """ Relation object used to describe relations between two objects. Please read the parameter description below
                 before creating relations. Will throw an exception if obj_1 and obj_2 are not a company and person respectively.

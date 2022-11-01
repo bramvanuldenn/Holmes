@@ -1,7 +1,0 @@
-from Holmes.data_objects.DataObject import DataObject
-from dataclasses import dataclass
-
-
-@dataclass
-class DomainData(DataObject):
-    data_type = 'domain'
