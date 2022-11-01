@@ -1,9 +1,10 @@
 from bson import ObjectId
 from Holmes.objects.BaseObject import BaseObject
+from typing import Type
 
 
 class BaseRelation:
-    def __init__(self, obj_1: BaseObject, obj_2: BaseObject, source: str, confidence: int):
+    def __init__(self, obj_1: Type[BaseObject], obj_2: Type[BaseObject], source: str, confidence: int):
         """ Relation object used to describe relations between two objects. Please read the parameter description below
         before creating relations.
 

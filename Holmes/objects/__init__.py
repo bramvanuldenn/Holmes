@@ -1,10 +1,7 @@
 # todo: this isn't very good
 from Holmes import data_objects
 from Holmes.objects.BaseObject import BaseObject
-from Holmes.objects.Company import Company
-from Holmes.objects.Domain import Domain
-from Holmes.objects.Place import Place
-from Holmes.objects.Person import Person
+from Holmes.objects.Objects import Person, Company, Domain, Place
 from typing import Type, Union
 from enum import Enum
 from bson import ObjectId
@@ -24,14 +21,14 @@ data_object_switch = {Person.__name__: data_objects.PersonData,
                       Place.__name__: data_objects.PlaceData}
 
 
-class ObjectsEnum(Enum):
+class ObjectTypes(Enum):
     COMPANY = Company
     PERSON = Person
     DOMAIN = Domain
     PLACE = Place
 
 
-def create_object(object_type: ObjectsEnum, key=None, object_data=None) -> Type[BaseObject]:
+def create_object(object_type: ObjectTypes, key=None, object_data=None) -> Type[BaseObject]:
     """
     Creates any of the 4 object types.
 
@@ -54,13 +51,13 @@ def from_json(json_data: dict) -> Union[Company, Place, Person, Domain]:
     object_type = json_data.pop('object_type')
 
     if object_type == 'Company':
-        return ObjectsEnum.COMPANY.value(**json_data)
+        return ObjectTypes.COMPANY.value(**json_data)
     if object_type == 'Person':
-        return ObjectsEnum.PERSON.value(**json_data)
+        return ObjectTypes.PERSON.value(**json_data)
     if object_type == 'Place':
-        return ObjectsEnum.PLACE.value(**json_data)
+        return ObjectTypes.PLACE.value(**json_data)
     if object_type == 'Domain':
-        return ObjectsEnum.DOMAIN.value(**json_data)
+        return ObjectTypes.DOMAIN.value(**json_data)
 
     raise UnknownObjectNameException(object_type)
 
