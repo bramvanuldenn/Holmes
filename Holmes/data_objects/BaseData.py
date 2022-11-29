@@ -1,11 +1,12 @@
 from dataclasses import dataclass, asdict, field
-from bson import ObjectId
+from Holmes import _id
 from Holmes.data_objects import exceptions
+from datetime import datetime
 
 
 @dataclass
 class BaseData:
-    key: ObjectId
+    _id: _id
     data: dict = field(default_factory=dict)
     data_type = 'base_type'
 
@@ -18,11 +19,17 @@ class BaseData:
         """
         if self.data is None:
             raise exceptions.EmptyDataObjectException(self, 'Data not loaded.')
-        if self.key is None:
+        if self._id is None:
             raise exceptions.EmptyDataObjectException(self, 'Key not loaded.')
 
         self_dict = asdict(self)
+
+        self_dict.update(self_dict.pop('data'))
         self_dict.update({'data_type': self.data_type})
+
+        # Extracting value from _id object
+        self_dict['_id'] = self_dict.pop('_id').value
+        self_dict['creation_timestamp'] = datetime.now()
 
         return self_dict
 

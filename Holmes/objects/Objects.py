@@ -4,7 +4,7 @@ from dataclasses import dataclass
 
 @dataclass
 class Company(BaseObject):
-    ...
+    country_code: str = None
 
 
 @dataclass

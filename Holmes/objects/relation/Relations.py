@@ -26,14 +26,14 @@ class Employee(BaseRelation):
             raise InvalidEmployeeException(obj_1, obj_2)
         super().__init__(obj_1, obj_2, source, confidence)
 
-    def get_as_dict(self) -> dict:
+    def to_json(self) -> dict:
         """Same as a standard Relation object, except the relation_name is overwritten with 'employee' """
-        data = super().get_as_dict()
+        data = super().to_json()
         data.update({'relation_name': 'employee'})
         return data
 
 
 if __name__ == '__main__':
     t = Employee(Company('the new standard'), Person('chiel'), 'somewhere', 100)
-    print(t.get_as_dict())
+    print(t.to_json())
 

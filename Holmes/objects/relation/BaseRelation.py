@@ -1,10 +1,13 @@
 from bson import ObjectId
 from Holmes.objects.BaseObject import BaseObject
+from Holmes.existing.BaseExisting import BaseExisting
 from typing import Type
+from Holmes import _id
 
 
 class BaseRelation:
-    def __init__(self, obj_1: Type[BaseObject], obj_2: Type[BaseObject], source: str, confidence: int):
+    def __init__(self, obj_1: Type[BaseObject or BaseExisting], obj_2: Type[BaseObject or BaseExisting], source: str,
+                 confidence: int):
         """ Relation object used to describe relations between two objects. Please read the parameter description below
         before creating relations.
 
@@ -13,16 +16,30 @@ class BaseRelation:
         :param source: Source of the relation. Should be the name of the application you've built.
         :param confidence: An integer value of 1 - 100. Data fetched from an official Chamber of Commerce would be 100, while an article would be much lower than that.
         """
-        self.obj_1_key = obj_1.key
-        self.obj_1_type = obj_1.__class__.__name__
+        if isinstance(obj_1, BaseObject):
+            self.obj_1_data = {
+                'instigator': {'_id': obj_1.id.value,
+                               'type': obj_1.__class__.__name__}
+            }
+        else:
+            self.obj_1_data = {
+                'instigator': obj_1.to_json()
+            }
 
-        self.obj_2_key = obj_2.key
-        self.obj_2_type = obj_2.__class__.__name__
+        if isinstance(obj_2, BaseObject):
+            self.obj_2_data = {
+                'receiver': {'_id': obj_2.id.value,
+                             'type': obj_2.__class__.__name__}
+            }
+        else:
+            self.obj_2_data = {
+                'receiver': obj_2.to_json()
+            }
 
         self.source = source
         self.confidence = confidence
         self.relation_type = None
-        self.relation_key = ObjectId()
+        self.relation_id = _id(ObjectId(), 'base')
 
     def set_relation_type(self, relation_type: str) -> None:
         """
@@ -33,24 +50,22 @@ class BaseRelation:
         """
         self.relation_type = relation_type
 
-    def get_as_dict(self) -> dict:
+    def to_json(self) -> dict:
+        relation = {}
+        relation.update(self.obj_1_data)
+        relation.update(self.obj_2_data)
+
         self_dict = {
             'source': self.source,
-            # R_ signifies a relationship
-            'relation_name': f'R_{self.obj_1_type}_{self.obj_2_type}',
-            'relation_key': self.relation_key,
+            '_id': self.relation_id.value,
             'confidence': self.confidence,
-            'relation':
-                {
-                    'instigator_key': self.obj_1_key,
-                    'instigator_type': self.obj_1_type,
-
-                    'receiver_key': self.obj_2_key,
-                    'receiver_type': self.obj_2_type
-                }
+            'relation': relation
         }
 
         if self.relation_type is not None:
             self_dict.update({'relation_type': self.relation_type})
 
         return self_dict
+
+    def __repr__(self):
+        return f"{self.to_json()}\n"

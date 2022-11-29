@@ -1,15 +1,20 @@
+from typing import Type
+
 from bson import ObjectId
 from Holmes.data_objects import BaseData
 import Holmes.objects as objects
 from dataclasses import dataclass, field, asdict
-
+from datetime import datetime
+from Holmes import _id
 
 @dataclass
 class BaseObject:
-    key: ObjectId
+    _id: _id
     data: dict = field(default_factory=dict)
 
     def __post_init__(self):
+        if self._id is None:
+            self._id = _id(ObjectId(), 'base')
         self.name = self.__class__.__name__.lower()
 
     def create_new_data_object(self, key=None) -> BaseData:
@@ -24,8 +29,7 @@ class BaseObject:
             key = ObjectId()
 
         args = {
-            f'{self.__class__.__name__.lower()}_key': self.key,
-            'key': key
+            f'{self.__class__.__name__.lower()}_id': self.key,
         }
         return objects.data_object_switch.get(self.__class__.__name__)(**args)
 
@@ -41,9 +45,20 @@ class BaseObject:
 
     def to_json(self) -> dict:
         data = asdict(self)
+        # data property is used for generating new data using it - the property itself does never hold any new data.
+        # hence why it is deleted.
+        data.pop('data')
+
+        data['_id'] = data.pop('key')
         # add the name of the object to the dict
-        data.update({'object_type': self.__class__.__name__})
+        data.update({'type': self.__class__.__name__})
+        data['creation_timestamp'] = datetime.now()
+
         return data
+
+    @property
+    def id(self):
+        return self._id
 
 
 if __name__ == '__main__':

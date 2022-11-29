@@ -27,8 +27,11 @@ class ObjectTypes(Enum):
     DOMAIN = Domain
     PLACE = Place
 
+    # for some reason when i add Type[BaseObject]
+    # PyCharm gives me a wrong type hint on this object---------------------\/
 
-def create_object(object_type: ObjectTypes, key=None, object_data=None) -> Type[BaseObject]:
+
+def create_object(object_type: ObjectTypes, key=None, object_data=None) -> BaseObject:
     """
     Creates any of the 4 object types.
 
@@ -49,6 +52,7 @@ def create_object(object_type: ObjectTypes, key=None, object_data=None) -> Type[
 
 def from_json(json_data: dict) -> Union[Company, Place, Person, Domain]:
     object_type = json_data.pop('object_type')
+    json_data['key'] = json_data.pop('_id')
 
     if object_type == 'Company':
         return ObjectTypes.COMPANY.value(**json_data)
