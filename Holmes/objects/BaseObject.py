@@ -7,6 +7,7 @@ from dataclasses import dataclass, field, asdict
 from datetime import datetime
 from Holmes import _id
 
+
 @dataclass
 class BaseObject:
     _id: _id
@@ -17,7 +18,7 @@ class BaseObject:
             self._id = _id(ObjectId(), 'base')
         self.name = self.__class__.__name__.lower()
 
-    def create_new_data_object(self, key=None) -> BaseData:
+    def create_new_data_object(self, id_obj=None) -> BaseData:
         """
         Returns the correct data_object for the class that calls it.
         Also loads the data object with the key of the class that called it.
@@ -25,11 +26,12 @@ class BaseObject:
 
         :return: DataObject(Company, Domain, Person, Place)
         """
-        if key is None:
-            key = ObjectId()
+        if id_obj is None:
+            id_obj = _id(ObjectId(), 'base')
 
         args = {
-            f'{self.__class__.__name__.lower()}_id': self.key,
+            '_id': id_obj,
+            f'parent_id': self._id,
         }
         return objects.data_object_switch.get(self.__class__.__name__)(**args)
 
@@ -43,17 +45,17 @@ class BaseObject:
         """
         self.data.update(data)
 
-    def to_json(self) -> dict:
+    def to_json(self, self_describe=True) -> dict:
         data = asdict(self)
         # data property is used for generating new data using it - the property itself does never hold any new data.
         # hence why it is deleted.
         data.pop('data')
+        data['_id'] = self.id.value
 
-        data['_id'] = data.pop('key')
         # add the name of the object to the dict
-        data.update({'type': self.__class__.__name__})
+        if self_describe:
+            data.update({'type': self.__class__.__name__})
         data['creation_timestamp'] = datetime.now()
-
         return data
 
     @property

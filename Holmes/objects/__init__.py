@@ -5,7 +5,7 @@ from Holmes.objects.Objects import Person, Company, Domain, Place
 from typing import Type, Union
 from enum import Enum
 from bson import ObjectId
-
+from Holmes import _id
 
 class UnknownObjectNameException(Exception):
     def __init__(self, object_name: str):
@@ -31,18 +31,18 @@ class ObjectTypes(Enum):
     # PyCharm gives me a wrong type hint on this object---------------------\/
 
 
-def create_object(object_type: ObjectTypes, key=None, object_data=None) -> BaseObject:
+def create_object(object_type: ObjectTypes, id_obj=None, object_data=None) -> BaseObject:
     """
     Creates any of the 4 object types.
 
     :param object_data: Optional dictionary to fill your object with.
     :param object_type: Objects class Enum, options are COMPANY, PERSON, DOMAIN or PLACE.
-    :param key: An UUID4 key, if none is supplied this function will generate it.
+    :param id: An _id object, if none is supplied this function will generate it.
     :return: A company, domain, person or place object.
     """
-    if key is None:
-        key = ObjectId()
-    args = {'key': key}
+    if id_obj is None:
+        id_obj = _id(ObjectId(), 'base')
+    args = {'_id': id_obj}
 
     if object_data is not None:
         args.update({'data': object_data})
@@ -52,7 +52,6 @@ def create_object(object_type: ObjectTypes, key=None, object_data=None) -> BaseO
 
 def from_json(json_data: dict) -> Union[Company, Place, Person, Domain]:
     object_type = json_data.pop('object_type')
-    json_data['key'] = json_data.pop('_id')
 
     if object_type == 'Company':
         return ObjectTypes.COMPANY.value(**json_data)

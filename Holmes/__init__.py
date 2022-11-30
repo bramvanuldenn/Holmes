@@ -6,3 +6,4 @@ from bson import ObjectId
 class _id:
     value: ObjectId
     name: str
+

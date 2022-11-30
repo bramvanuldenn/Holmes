@@ -7,6 +7,7 @@ from datetime import datetime
 @dataclass
 class BaseData:
     _id: _id
+    parent_id: _id
     data: dict = field(default_factory=dict)
     data_type = 'base_type'
 
@@ -28,9 +29,9 @@ class BaseData:
         self_dict.update({'data_type': self.data_type})
 
         # Extracting value from _id object
-        self_dict['_id'] = self_dict.pop('_id').value
+        self_dict['_id'] = self._id.value
+        self_dict['parent_id'] = self.parent_id.value
         self_dict['creation_timestamp'] = datetime.now()
-
         return self_dict
 
     def load_data(self, data: dict) -> None:
@@ -41,6 +42,10 @@ class BaseData:
         :return: None
         """
         self.data.update(data)
+
+    @property
+    def id(self) -> _id:
+        return self._id
 
 
 @dataclass
